@@ -13,6 +13,7 @@ class Game {
   }
 
   start() {
+    this.player = new Player(this);
     this.reset();
     this.loop();
   }
@@ -23,6 +24,7 @@ class Game {
 
   loop() {
     this.runLogic();
+    this.draw();
     this.paint();
 
     if (this.isRunning) {
@@ -33,9 +35,23 @@ class Game {
   }
 
   paint() {
-    //this.clearScreen();
+    this.clearScreen();
     this.background.paint();
   }
 
-  runLogic() {}
+  runLogic() {
+    this.player.runLogic();
+  }
+
+  clear() {
+    const { width, height } = this.$canvas;
+    this.context.clearRect(0, 0, width, height);
+  }
+
+  draw() {
+    this.clear();
+    this.background.paint();
+    //for (let obstacle of this.obstacles) obstacle.draw();
+    this.player.draw();
+  }
 }

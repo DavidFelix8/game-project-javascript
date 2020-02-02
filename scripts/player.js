@@ -7,7 +7,7 @@ class Player {
   }
   draw() {
     const context = this.game.context;
-    const $canvas = context.canvas;
+    //const $canvas = context.canvas;
     context.save();
     context.drawImage(playerImage, 0, 0);
     context.restore();

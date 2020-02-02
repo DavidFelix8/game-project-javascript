@@ -1,13 +1,30 @@
-const $canvas = document.querySelector('canvas');
+/*const $canvas = document.querySelector('canvas');
 
-const context = $canvas.getContext('2d');
+const context = $canvas.getContext('2d');*/
+
+const context = document.querySelector('canvas').getContext('2d');
+const buffer = document.createElement('canvas').getContext('2d');
+
+const height = document.documentElement.clientHeight - 16;
+const width = document.documentElement.clientWidth - 16;
+
+// Min_Size
+const min_size = height < width ? height : width;
+
+context.canvas.height = min_size;
+context.canvas.width = min_size;
+
+scale = min_size / buffer.canvas.width;
+
+// Smoothing game
+context.imageSmoothingEnabled = false;
 
 //Show the background
-const imageUrls = 'images/background/desert.png';
-const image = new Image();
-image.src = imageUrls;
-image.addEventListener('load', () => {
-  context.drawImage(image, 0, 0, context.canvas.width, context.canvas.height);
+const backgroundImg = 'images/background/desert.png';
+const backgrondImage = new Image();
+backgrondImage.src = backgroundImg;
+backgrondImage.addEventListener('load', () => {
+  context.drawImage(backgrondImage, 0, 0, min_size, min_size);
 });
 
 //Class
@@ -17,14 +34,5 @@ class Background {
     this.paint();
   }
 
-  paint() {
-    const context = this.game.context;
-    const $canvas = context.canvas;
-
-    const width = $canvas.width;
-    const height = $canvas.height;
-
-    const distance = this.game.player.position.x;
-    //this.game.context.fillRect(0, 0, 100, 100);
-  }
+  paint() {}
 }

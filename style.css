@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
 html,
 body {
   width: 100%;
@@ -5,14 +11,17 @@ body {
 }
 
 body {
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
   margin: 0;
   background-color: #e7e5e2;
+  /*background-color: aliceblue;*/
 }
 
 /*Make it amplified*/
 canvas {
-  transform: scale(1.5);
+  /*transform: scale(1.5);*/
+  align-self: center;
+  justify-self: center;
 }

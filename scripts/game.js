@@ -6,14 +6,12 @@ class Game {
     this.context = this.$canvas.getContext('2d');
     this.isRunning = true;
 
-    /*this.keyboardController = new KeyboardController(this);
-    this.keyboardController.setKeyBindings();*/
-
     this.background = new Background(this);
+    this.player = new Player(this);
+    this.monster = new Monster(this);
   }
 
   start() {
-    this.player = new Player(this);
     this.reset();
     this.loop();
   }
@@ -27,18 +25,22 @@ class Game {
     this.draw();
     this.paint();
 
-    if (this.isRunning) {
+    /*if (this.isRunning) {
       setTimeout(() => {
         this.loop();
       }, 300);
-    }
+    }*/
   }
 
   paint() {
     this.clearScreen();
     this.background.paint();
+    this.player.draw();
   }
 
+  clearScreen() {
+    this.context.clearRect(0, 0, this.$canvas.width, this.$canvas.height);
+  }
   runLogic() {
     this.player.runLogic();
   }
@@ -53,5 +55,6 @@ class Game {
     this.background.paint();
     //for (let obstacle of this.obstacles) obstacle.draw();
     this.player.draw();
+    this.monster.draw();
   }
 }

@@ -5,8 +5,8 @@ const context = $canvas.getContext('2d');*/
 const context = document.querySelector('canvas').getContext('2d');
 const buffer = document.createElement('canvas').getContext('2d');
 
-const height = document.documentElement.clientHeight - 16;
-const width = document.documentElement.clientWidth - 16;
+const height = document.documentElement.clientHeight - 150;
+const width = document.documentElement.clientWidth;
 
 // Min_Size
 const min_size = height < width ? height : width;
@@ -23,16 +23,14 @@ context.imageSmoothingEnabled = false;
 const backgroundImg = 'images/background/desert.png';
 const backgrondImage = new Image();
 backgrondImage.src = backgroundImg;
-backgrondImage.addEventListener('load', () => {
-  context.drawImage(backgrondImage, 0, 0, min_size, min_size);
-});
 
 //Class
 class Background {
   constructor(game) {
     this.game = game;
-    this.paint();
   }
 
-  paint() {}
+  paint() {
+    this.game.context.drawImage(backgrondImage, 0, 0, min_size, min_size);
+  }
 }

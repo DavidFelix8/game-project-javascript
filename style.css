@@ -15,8 +15,14 @@ body {
   justify-content: center;
   align-items: center;
   margin: 0;
-  //background-color: #e7e5e2;
-  background-color: aliceblue;
+  /* background-color: #e7e5e2; */
+  /* background-color: aliceblue; */
+  background: linear-gradient(
+    5deg,
+    rgba(231, 229, 226, 1) 0%,
+    rgba(150, 124, 104, 1) 35%,
+    rgba(65, 54, 45, 1) 100%
+  );
 }
 
 /*Make it amplified*/
@@ -24,4 +30,5 @@ canvas {
   /*transform: scale(1.5);*/
   align-self: center;
   justify-self: center;
+  border: 2px solid black;
 }

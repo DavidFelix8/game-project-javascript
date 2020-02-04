@@ -6,17 +6,26 @@ airplane_image.src = airplane_Img;
 class Entrance {
   constructor(game) {
     this.game = game;
+    this.positionXair = 0;
+    this.positionYair = 30;
+    this.velocityXair = 2;
+    this.velocityYair = 0;
+    this.airplaneWidth = 100;
+    this.airplaneHeight = 80;
   }
 
   draw() {
     context.drawImage(
       airplane_image,
-      this.positionX,
-      this.positionY,
-      this.playerWidth,
-      this.playerHeight
+      this.positionXair,
+      this.positionYair,
+      this.airplaneWidth,
+      this.airplaneHeight
     );
   }
 
-  runLogic() {}
+  runLogic() {
+    //this.positionYair += this.velocityYair;
+    if (this.positionXair < 450) this.positionXair += this.velocityXair;
+  }
 }

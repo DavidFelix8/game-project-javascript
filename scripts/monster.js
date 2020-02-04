@@ -116,7 +116,6 @@ class Monster {
         playerY < greenAnimaY + greenAnimaHeight)
     ) {
       this.game.isRunning = false;
-      console.log('hit');
     }
   }
 

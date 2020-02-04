@@ -52,10 +52,10 @@ class Game {
   }
 
   runLogic() {
+    this.entrance.runLogic();
     this.player.runLogic();
     for (let monster of this.monsters) {
       monster.runLogic();
-      this.entrance.runLogic();
     }
 
     // Jump

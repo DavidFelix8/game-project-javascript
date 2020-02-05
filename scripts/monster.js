@@ -8,18 +8,6 @@ class Monster {
     this.widthB = 60;
     this.heightB = 60;
     this.wings = 1;
-    //Dorver
-    this.positionXD = 0;
-    this.positionYD = 0;
-    this.velocityXD = 2;
-    this.widthD = 60;
-    this.heightD = 80;
-    //Green
-    this.positionXG = 900;
-    this.positionYG = 0;
-    this.velocityXG = 2;
-    this.widthG = 30;
-    this.heightG = 30;
     this.setRandomPosition();
   }
 
@@ -28,12 +16,8 @@ class Monster {
     this.velocityX = Math.floor(Math.random() * 3); */
     //Height
     this.positionYB = Math.random() * 300;
-    this.positionYD = 380 + Math.random() * 60;
-    this.positionYG = 500 + Math.random() * 60;
     //Width
     this.velocityXB = 0.3 + Math.random() * 2;
-    this.velocityXD = Math.random() * 2;
-    this.velocityXG = 0.3 + Math.random() * -1;
   }
 
   draw() {
@@ -65,20 +49,6 @@ class Monster {
         this.heightB
       );
     }
-    context.drawImage(
-      dorver_image,
-      this.positionXD - 100,
-      this.positionYD,
-      this.widthD,
-      this.heightD
-    );
-    context.drawImage(
-      greenAnima_image,
-      this.positionXG - 100,
-      this.positionYG,
-      this.widthG,
-      this.heightG
-    );
   }
 
   checkCollision() {
@@ -92,28 +62,11 @@ class Monster {
     let batY = this.positionYB;
     let batWidth = this.widthB;
     let batHeight = this.heightB;
-    let dorverX = this.positionXD;
-    let dorverY = this.positionYD;
-    let dorverWidth = this.widthD;
-    let dorverHeight = this.heightD;
-    let greenAnimaX = this.positionXG;
-    let greenAnimaY = this.positionYG;
-    let greenAnimaWidth = this.widthG;
-    let greenAnimaHeight = this.heightG;
-
     if (
-      (playerX + playerWidth > batX &&
-        playerX < batX + batWidth &&
-        playerY + playerHeight > batY &&
-        playerY < batY + batHeight) ||
-      (playerX + playerWidth > dorverX &&
-        playerX < dorverX + dorverWidth &&
-        playerY + playerHeight > dorverY &&
-        playerY < dorverY + dorverHeight) ||
-      (playerX + playerWidth > greenAnimaX &&
-        playerX < greenAnimaX + greenAnimaWidth &&
-        playerY + playerHeight > greenAnimaY &&
-        playerY < greenAnimaY + greenAnimaHeight)
+      playerX + playerWidth > batX &&
+      playerX < batX + batWidth &&
+      playerY + playerHeight > batY &&
+      playerY < batY + batHeight
     ) {
       this.game.isRunning = false;
     }
@@ -121,8 +74,6 @@ class Monster {
 
   runLogic() {
     this.positionXB += this.velocityXB;
-    this.positionXD += this.velocityXD;
-    this.positionXG += this.velocityXG;
     this.checkCollision();
     /* this.positionY += this.velocityY; */
     /* if (this.positionX < -1 || this.positionX > width) this.velocityX *= 4; */

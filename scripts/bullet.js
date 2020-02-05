@@ -1,47 +1,21 @@
-const PROJECTILE_SPEED = 10;
-const PROJECTILE_SIZE = 5;
+const bulletIcon = new Image();
+bulletIcon.src = 'images/others/BulletIcon.png';
 
 class Projectile {
-  constructor(game, positionX, positionY, direction) {
+  constructor(game, positionX, positionY, dir) {
     this.game = game;
     this.positionX = positionX;
     this.positionY = positionY;
-    /* this.vx = 5 * direction + vx; */
-    /*     this.width = 2;
-    this.height = 4; */
-    /*   this.yVel = -bullet.vel;
-    this.active = true; */
-    /* this.positionX = bulletX;
-    this.positionY = bulletY;
-    this.direction = direction;
-    this.speed = PROJECTILE_SPEED;
-    this.size = PROJECTILE_SIZE; */
+    this.width = 10;
+    this.height = 5;
+    this.direction = dir;
   }
 
   runLogic() {
-    /*     const { direction, speed, positionX, positionY } = this;
-
-    const vector = {
-      x: speed * Math.sin(direction),
-      y: speed * Math.cos(direction) * -1
-    };
-
-    this.positionX = {
-      x: position.x + vector.x
-    };
-    this.positionY = {
-      y: position.y + vector.y
-    };*/
-    /* this.x += this.vx;
-
-    projectile.push(
-      new Projectile(
-        this.player.positionX,
-        this.player.positionY + 4,
-        this.player.direction,
-        this.vx
-      )
-    ); */
+    if (this.direction === 'right') this.positionX += 2;
+    else {
+      this.positionX -= 2;
+    }
   }
 
   paint() {
@@ -49,9 +23,18 @@ class Projectile {
 
     context.save();
 
-    context.fillStyle = 'yellow';
-    context.fillRect(this.positionX, this.positionY, this.width, this.height);
-
-    context.restore;
+    if (this.direction === 'right') {
+      context.drawImage(bulletIcon, this.positionX, this.positionY, this.width, this.height);
+    } else {
+      context.scale(-1, 1);
+      context.drawImage(
+        bulletIcon,
+        -this.positionX - this.width,
+        this.positionY,
+        this.width,
+        this.height
+      );
+    }
+    context.restore();
   }
 }

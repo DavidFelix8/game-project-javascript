@@ -7,7 +7,7 @@ class Scoreboard {
     context.font = '20px monospace';
     context.fillStyle = 'black';
 
-    context.fillText('Score' + player.score, 0, 530);
+    context.fillText('Score' + game.score, 0, 530);
   } */
 
   //Start Game
@@ -31,6 +31,8 @@ class Scoreboard {
       context.fillStyle = 'white';
       context.fillText('Game Over', 170, 220);
     } */
+
+  //Win
 
   runlogic() {
     /*  this.score(); */

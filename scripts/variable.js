@@ -24,3 +24,24 @@ spider_image.src = spider_Img;
 const greenAnima_Img = 'images/monster/greenAnima.png';
 const greenAnima_image = new Image();
 greenAnima_image.src = greenAnima_Img;
+
+//Music
+//entrance
+
+function checkIntersection(
+  posXPlayer,
+  posYPlayer,
+  widthPlayer,
+  heightPlayer,
+  posX,
+  posY,
+  widthObstacle,
+  heightObstacle
+) {
+  return (
+    posYPlayer + heightPlayer > posY &&
+    posYPlayer < posY + heightObstacle &&
+    posXPlayer + widthPlayer > posX &&
+    posXPlayer < posX + widthObstacle
+  );
+}

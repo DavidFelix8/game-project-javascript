@@ -1,15 +1,30 @@
-const playerImage = new Image();
-playerImage.src = './images/player/player_idle_right.gif';
+const playerImageIdle = new Image();
+playerImageIdle.src = './images/player/player_idle_right.gif';
+
+const playerImageRight = new Image();
+playerImageRight.src = './images/player/player_run_right.gif';
+
+const playerImageLeft = new Image();
+playerImageLeft.src = './images/player/player_run_left.gif';
+
+const playerImageShootRight = new Image();
+playerImageShootRight.src = './images/player/player_shoot_right.gif';
+
+const playerImageShootLeft = new Image();
+playerImageShootLeft.src = './images/player/player_shoot_left.gif';
+
+/* const playerImageDeadLeft = new Image();
+playerImageDeadLeft.src = './images/player/player_death_left.gif'; */
 
 class Player {
   constructor(game) {
     this.game = game;
-    this.width = context.canvas.width;
     this.height = 100;
     this.positionX = 260;
     this.positionY = 510;
     this.playerWidth = 80;
     this.playerHeight = 80;
+    this.playerHeightShoot = 100;
     this.velocityX = 0;
     this.velocityY = 0;
     this.gravity = 10;
@@ -18,26 +33,28 @@ class Player {
     this.nextVelY = 0;
     this.nextPosX = 0;
     this.nextPosY = 0;
-    /*  this.playerImage = playerPaused; */
     this.jumping = false;
     this.move = 0;
     this.score = 0;
     this.direction = 'idle';
+    this.image = playerImageIdle;
+    this.imageShoot = playerImageIdle;
+    this.lastPressed = '';
   }
 
   //Movements
   moveRight() {
-    /* if (this.positionX < 820) { */
-    this.positionX += 50;
-    this.direction = 'right';
-    /*  } */
+    if (this.positionX < 820) {
+      this.positionX += 1;
+      this.direction = 'right';
+    }
   }
 
   moveLeft() {
-    /* if (this.positionX > 0) { */
-    this.positionX -= 50;
-    this.direction = 'left';
-    /* } */
+    if (this.positionX > 0) {
+      this.positionX -= 1;
+      this.direction = 'left';
+    }
   }
 
   jump() {
@@ -58,34 +75,43 @@ class Player {
 
     //const $canvas = context.canvas;
     context.save();
+
+    // Player change when clicked
+
+    if (this.direction === 'idle') {
+      this.image = playerImageIdle;
+    } else if (this.direction === 'right') {
+      this.image = playerImageRight;
+      this.lastPressed = 'right';
+    } else if (this.direction === 'left') {
+      this.image = playerImageLeft;
+      this.lastPressed = 'left';
+    } else if (this.lastPressed === 'right' && this.direction === 'shoot') {
+      /* this.imageShoot = playerImageShootRight; */
+      this.image = playerImageShootRight;
+    } else if (this.lastPressed === 'left' && this.direction === 'shoot') {
+      /* this.imageShoot = playerImageShootLeft; */
+      this.image = playerImageShootLeft;
+    } else {
+      this.image = playerImageIdle;
+    }
+
     context.drawImage(
-      playerImage,
+      this.image,
       this.positionX,
       this.positionY,
       this.playerWidth,
       this.playerHeight
     );
+    /* context.clearRect(this.image, this.positionX, this.positionY, canvas.width, canvas.height);
 
-    // Player change when clicked
-    /* let playerImage = ''; */
-
-    /*   if (player.direction === 'idle') {
-      player_Image = './images/player/player_idle_right.gif';
-    } else if (player.direction === 'right') {
-      playerImage = './images/player/player_run_right.gif';
-    } else if (player.direction === 'left') {
-      playerImage = 'images/player/player_run_left.gif';
-    } else if (player.direction === 'right' && key === 'shoot') {
-      playerImage = 'images/player/player_shoot_right.gif';
-    } else if (player.direction === 'left' && key === 'shoot') {
-      playerImage = 'images/player/player_shoot_left.gif';
-    }
-    const playerImage = new Image();
-    playerImage.src = player_Img;
-    playerImage.addEventListener('load', () => {
-      context.drawImage(playerImage, 260, 510);
-    }); */
-
+    context.drawImage(
+      this.imageShoot,
+      this.positionX,
+      this.positionY,
+      this.playerWidth,
+      this.playerHeightShoot
+    ); */
     context.restore();
   }
 
@@ -94,11 +120,14 @@ class Player {
     if (keys.right in keysDown) {
       this.move = 1;
       this.direction = 'right';
-      //this.moveRight();
+      this.moveRight();
     } else if (keys.left in keysDown) {
       this.move = -1;
       this.direction = 'left';
-      //this.moveLeft();
+      this.moveLeft();
+    } else if (keys.f in keysDown) {
+      this.direction = 'shoot';
+      this.shoot();
     } else {
       this.move = 0;
     }

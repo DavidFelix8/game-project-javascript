@@ -32,7 +32,7 @@ body {
 
 /*Make it amplified*/
 canvas {
-  display: block:
+  display: block;
   /*transform: scale(1.5);*/
   align-self: center;
   justify-self: center;
@@ -46,37 +46,44 @@ canvas {
   align-items: center;
 }
 
-.newGame_button {
-  padding: 1rem 2rem;
+#newGame_button {
+  padding: 1rem 4rem;
   background-color: grey;
   border: none;
   outline: 0;
   border-radius: 10%;
 }
 
-.newGame_button:hover {
-  padding: 1rem 3rem;
+#newGame_button:hover {
+  padding: 1rem 6rem;
   background-color: orange;
 }
 
-.reset_button {
-  padding: 1rem 2rem;
+#reset_button {
+  padding: 1rem 4rem;
   background-color: grey;
   border: none;
   outline: 0;
+  border-top-left-radius: 20%;
+  border-bottom-right-radius: 20%;
 }
 
-.reset_button:hover {
+#reset_button:hover {
   background-color: orange;
+  border-top-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+  border-top-right-radius: 20%;
+  border-bottom-left-radius: 20%;
 }
 
-.pause_button {
-  padding: 1rem 2rem;
+#pause_button {
+  padding: 1rem 4rem;
   background-color: grey;
   border: none;
   outline: 0;
+  border-radius: 40%;
 }
 
-.pause_button:hover {
+#pause_button:hover {
   background-color: orange;
 }

@@ -13,14 +13,15 @@
       <!-- <img src="images/others/game-over.png" alt="" class="img_gameover" /> -->
     </div>
     <div id="buttons">
+      <img src="images/others/volumeUp.png" id="volumes" onclick="volumeChange(this)" />
       <div id="newGame">
-        <button class="newGame_button">New Game</button>
+        <button id="newGame_button">New Game</button>
       </div>
       <div id="reset">
-        <button class="reset_button">Reset</button>
+        <button id="reset_button">Reset</button>
       </div>
       <div id="pause">
-        <button class="pause_button">Pause</button>
+        <button id="pause_button">Pause</button>
       </div>
     </div>
     <canvas width="920" height="600"></canvas>
@@ -29,6 +30,7 @@
     <script src="scripts/controller.js"></script>
     <script src="scripts/background.js"></script>
     <script src="scripts/monster.js"></script>
+    <script src="scripts/monsterground.js"></script>
     <script src="scripts/bullet.js"></script>
     <script src="scripts/obstacle.js"></script>
     <script src="scripts/player.js"></script>

@@ -21,6 +21,7 @@ class Player {
     /*  this.playerImage = playerPaused; */
     this.jumping = false;
     this.move = 0;
+    this.score = 0;
     this.direction = 'idle';
   }
 
@@ -47,6 +48,10 @@ class Player {
     }
   }
 
+  shoot() {
+    this.direction = 'shoot';
+  }
+
   //Draw Images
   draw() {
     const context = this.game.context;
@@ -70,9 +75,9 @@ class Player {
       playerImage = './images/player/player_run_right.gif';
     } else if (player.direction === 'left') {
       playerImage = 'images/player/player_run_left.gif';
-    } else if (player.direction === 'right' && key === 'space') {
+    } else if (player.direction === 'right' && key === 'shoot') {
       playerImage = 'images/player/player_shoot_right.gif';
-    } else if (player.direction === 'left' && key === 'space') {
+    } else if (player.direction === 'left' && key === 'shoot') {
       playerImage = 'images/player/player_shoot_left.gif';
     }
     const playerImage = new Image();
@@ -87,7 +92,6 @@ class Player {
   runLogic() {
     //Jump
     if (keys.right in keysDown) {
-      console.log('yes');
       this.move = 1;
       this.direction = 'right';
       //this.moveRight();

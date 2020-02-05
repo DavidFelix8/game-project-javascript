@@ -5,12 +5,16 @@ class Game {
     this.$canvas.width = $canvas.width;
     this.context = this.$canvas.getContext('2d');
     this.isRunning = false;
+    /* this.start = false;
+    this.gameOver = false; */
 
     this.keyboardController = new Keys(this);
 
     this.background = new Background(this);
-    this.player = new Player(this);
     this.entrance = new Entrance(this);
+    this.player = new Player(this);
+    this.projectile = new Projectile(this);
+    this.scoreboard = new Scoreboard(this);
 
     this.monsters = [];
     for (let i = 0; i < 10; i++) {
@@ -26,6 +30,17 @@ class Game {
 
   reset() {
     this.isRunning = true;
+    this.player.positionX = 260;
+    this.player.positionY = 510;
+  }
+
+  pause() {
+    if (this.isRunning) {
+      this.isRunning = !this.isRunning;
+    } else {
+      this.isRunning = !this.isRunning;
+      this.loop();
+    }
   }
 
   loop() {
@@ -42,6 +57,7 @@ class Game {
     this.background.paint();
     this.entrance.draw();
     this.player.draw();
+    this.projectile.paint();
     for (let monster of this.monsters) {
       monster.draw();
     }

@@ -29,10 +29,10 @@ class Keys {
 }
 
 var keysDown = new Array();
-var keys = { left: 37, right: 39, up: 38, down: 40, space: 32 };
+var keys = { left: 37, right: 39, space: 32, f: 70 };
 addEventListener('keydown', e => {
   keysDown[e.keyCode] = true;
-  if ([32, 37, 38, 39, 40, 83].indexOf(e.keyCode) > -1) {
+  if ([32, 37, 39, 70].indexOf(e.keyCode) > -1) {
     e.preventDefault();
   }
 });

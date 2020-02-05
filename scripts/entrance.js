@@ -14,7 +14,11 @@ class Entrance {
     this.airplaneHeight = 80;
   }
 
+  start() {}
+
   draw() {
+    /* context.transform() */
+    /* context.scale(); */
     context.drawImage(
       airplane_image,
       this.positionXair,
@@ -26,6 +30,6 @@ class Entrance {
 
   runLogic() {
     //this.positionYair += this.velocityYair;
-    if (this.positionXair < 450) this.positionXair += this.velocityXair;
+    if (this.positionXair < 400) this.positionXair += this.velocityXair;
   }
 }

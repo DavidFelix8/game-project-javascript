@@ -1,5 +1,3 @@
-/* const backSong = new Audio('music/fundo.mp3'); */
-
 class Game {
   constructor($canvas) {
     this.$canvas = $canvas;
@@ -12,6 +10,7 @@ class Game {
     this.gameOver = false; */
 
     this.keyboardController = new Keys(this);
+    this.keyboardController.setKeyboardEventListeners();
 
     this.background = new Background(this);
     this.entrance = new Entrance(this);
@@ -21,8 +20,6 @@ class Game {
 
     this.monsters = [];
     this.monsterground = [];
-
-    //Make Sound Off
   }
 
   makeMonster() {
@@ -39,8 +36,7 @@ class Game {
   start() {
     this.reset();
     this.makeMonster();
-    /* backng.play(); */
-
+    backSong.play();
     if (!this.animation) {
       this.loop();
     }
@@ -48,9 +44,12 @@ class Game {
 
   reset() {
     this.clearScreen();
+    // backSong.stop();
     this.monsters = [];
-    this.player.positionX = 260;
-    this.player.positionY = 510;
+    this.monsterground = [];
+    /*  this.player.positionX = 260;
+    this.player.positionY = 510; 
+    this.player.direction = 'idle'; */
     this.isRunning = true;
   }
 
@@ -58,12 +57,13 @@ class Game {
     if (this.isRunning) {
       this.isRunning = !this.isRunning;
       document.getElementById('pause_button').innerText = 'Resume';
+      backSong.pause();
     } else {
       this.isRunning = !this.isRunning;
       document.getElementById('pause_button').innerText = 'Pause';
       this.loop();
+      backSong.play();
     }
-    backSong.pause();
   }
 
   loop() {
@@ -86,7 +86,10 @@ class Game {
     for (let monsterground of this.monsterground) {
       monsterground.draw();
     }
-    for (let shoot of this.shoots) shoot.paint();
+    for (let shoot of this.shoots) {
+      shoot.paint();
+    }
+    this.scoreboard.paintScore();
   }
 
   clearScreen() {
@@ -96,60 +99,88 @@ class Game {
   runLogic() {
     this.entrance.runLogic();
     this.player.runLogic();
-    for (let monster of this.monsters) {
-      monster.runLogic();
-    }
-    for (let monsterground of this.monsterground) {
-      monsterground.runLogic();
+    //console.log(this.shoots);
+    for (let shoot of this.shoots) {
+      shoot.runLogic();
     }
 
-    // Jump
-    this.player.nextVelX =
-      this.player.velocityX / (1 + (this.player.friction / 1000) * 16) + this.player.move * 0.5;
-    this.player.nextVelY = this.player.velocityY + (this.player.gravity / 1000) * 16;
+    for (let i = 0; i < this.monsters.length; i++) {
+      this.monsters[i].runLogic();
+      for (let j = 0; j < this.shoots.length; j++) {
+        let found = this.monsters[i].checkCollisionBullets(this.shoots[j]);
+        if (found) {
+          this.scoreboard.score += 1;
 
-    this.player.nextPosX = this.player.positionX + this.player.nextVelX;
-    this.player.nextPosY = this.player.positionY + this.player.nextVelY;
+          this.monsters.splice(i, 1);
+          this.shoots[j].speed = 0;
+          this.shoots.splice(j, 1);
+          break;
+        } else if (
+          this.shoots[j].positionX === this.$canvas.width ||
+          this.shoots[j].positionX === 0
+        ) {
+          this.shoots.splice(j, 1);
+        }
+      }
+    }
 
-    this.player.velocityX = this.player.nextVelX;
-    this.player.velocityY = this.player.nextVelY;
-    this.player.positionX = this.player.nextPosX;
-    this.player.positionY = this.player.nextPosY;
+    for (let i = 0; i < this.monsterground.length; i++) {
+      this.monsterground[i].runLogic();
+      for (let j = 0; j < this.shoots.length; j++) {
+        let found = this.monsterground[i].checkCollisionBullets(this.shoots[j]);
+        if (found) {
+          this.scoreboard.score += 1;
+          this.monsterground.splice(i, 1);
+          this.shoots[j].speed = 0;
+          this.shoots.splice(j, 1);
+          break;
+        } else if (
+          this.shoots[j].positionX === this.$canvas.width ||
+          this.shoots[j].positionX === 0
+        ) {
+          this.shoots.splice(j, 1);
+        }
+      }
+    }
+  }
 
-    //Shoot
+  shoot() {
     const positionX = this.player.positionX;
     const positionY = this.player.positionY;
     const width = this.player.playerWidth;
     const height = this.player.playerHeight;
-
-    if (keys.f in keysDown) {
-      if (this.player.lastPressed === 'right') {
-        const shoot = new Projectile(this, positionX + width, positionY + height / 2, 'right');
-        this.shoots.push(shoot);
-      } else {
-        const shoot = new Projectile(this, positionX + width, positionY + height / 2, 'left');
-        this.shoots.push(shoot);
-      }
+    if (this.player.lastPressed === 'right') {
+      const shoot = new Projectile(this, positionX + width, positionY + height / 2, 'right');
+      this.shoots.push(shoot);
+      //console.log(this.shoots);
+    } else {
+      const shoot = new Projectile(this, positionX + width, positionY + height / 2, 'left');
+      this.shoots.push(shoot);
     }
+  }
 
-    for (let shoot of this.shoots) {
-      shoot.runLogic();
-      for (let i = 0; i < this.monsters.length; i++) {
-        let found = false;
-
-        if (found) this.monsters.splice(i, 1);
-        if (shoot.positionX === this.$canvas.width || shoot.positionX === 0) {
-          this.shoots.splice(i, 1);
-        }
-      }
-      for (let i = 0; i < this.monsterground.length; i++) {
-        let found = false;
-
-        if (found) this.monster.splice(i, 1);
-        if (shoot.positionX === this.$canvas.width || shoot.positionX === 0) {
-          this.shoots.splice(i, 1);
-        }
-      }
+  movePlayer(key) {
+    switch (key) {
+      case 'right':
+        //console.log(key);
+        this.player.moveRight();
+        //move player up
+        break;
+      case 'left':
+        //console.log(key);
+        this.player.moveLeft();
+        //move player dow
+        break;
+      case 'space':
+        // console.log(key);
+        this.player.jumpThatWorks();
+        //move player up
+        break;
+      case 'shoot':
+        //console.log(key);
+        this.player.shoot();
+        //shoot
+        break;
     }
   }
 
@@ -157,13 +188,4 @@ class Game {
     const { width, height } = this.$canvas;
     this.context.clearRect(0, 0, width, height);
   }
-}
-
-function volumeChange(change) {
-  const volDown = 'images/others/volumeDown.png';
-  const volUp = 'images/others/volumeUp.png';
-  change.src = change.bln ? volDown : volUp;
-  change.bln = !change.bln;
-
-  discover = volDown ? backSong.pause() : backSong.play();
 }

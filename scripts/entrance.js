@@ -17,8 +17,10 @@ class Entrance {
   start() {}
 
   draw() {
+    this.game.context.drawImage(backgrondImage, 0, 0, width, height);
     /* context.transform() */
     /* context.scale(); */
+
     context.drawImage(
       airplane_image,
       this.positionXair,

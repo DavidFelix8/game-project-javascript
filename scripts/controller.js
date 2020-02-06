@@ -1,41 +1,27 @@
 class Keys {
   constructor(game) {
     this.game = game;
-    /*  this.setKeyboardEventListeners(); */
   }
-
-  /* setKeyboardEventListeners() {
+  setKeyboardEventListeners() {
     window.addEventListener('keydown', event => {
-      event.preventDefault();
+      let key = '';
       switch (event.keyCode) {
         case 32:
-          //this.player -= 10;
-          this.game.player.jump();
-          console.log('space');
+          key = 'space';
           break;
         case 37:
-          //this.player -= 10;
-          console.log('left');
-
-          this.game.player.moveLeft();
+          key = 'left';
           break;
         case 39:
-          //this.player += 10;
-          this.game.player.moveRight();
-          console.log('right');
+          key = 'right';
           break;
+        case 70:
+          key = 'shoot';
       }
-    }); */
-}
-
-var keysDown = new Array();
-var keys = { left: 37, right: 39, space: 32, f: 70 };
-addEventListener('keydown', e => {
-  keysDown[e.keyCode] = true;
-  if ([32, 37, 39, 70].indexOf(e.keyCode) > -1) {
-    e.preventDefault();
+      if (key) {
+        event.preventDefault();
+        this.game.movePlayer(key);
+      }
+    });
   }
-});
-addEventListener('keyup', e => {
-  delete keysDown[e.keyCode];
-});
+}

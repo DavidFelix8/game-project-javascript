@@ -1,14 +1,15 @@
 class Scoreboard {
   constructor(game) {
+    this.game = game;
+    this.score = 0;
     this.startGame = false;
   }
   //Score
-  /*   score() {
-    context.font = '20px monospace';
+  paintScore() {
+    context.font = '40px monospace';
     context.fillStyle = 'black';
-
-    context.fillText('Score' + game.score, 0, 530);
-  } */
+    context.fillText('Score: ' + this.score, 700, 50);
+  }
 
   //Start Game
   /*  startGame() {
@@ -25,16 +26,25 @@ class Scoreboard {
   } */
 
   //GameOver
-  /* if (this.monster.checkCollision()) {
-      this.game.isRunning = false;
-      context.font = '2rem Calibri';
-      context.fillStyle = 'white';
-      context.fillText('Game Over', 170, 220);
-    } */
+  gameOver() {
+    // if (this.monsters.checkCollision() || this.monsterground.checkCollision()) {
+    this.game.isRunning = false;
+    context.font = '2rem Calibri';
+    context.fillStyle = 'white';
+    context.fillText('Game Over', 200, 250);
+
+    /* context.drawImage(
+      this.gameOver_Img,
+      this.positionX,
+      this.positionY,
+      this.playerWidth,
+      this.playerHeight
+    ); */
+    // }
+    // backSong.pause();
+  }
 
   //Win
 
-  runlogic() {
-    /*  this.score(); */
-  }
+  runlogic() {}
 }

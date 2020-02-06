@@ -1,21 +1,3 @@
-const playerImageIdle = new Image();
-playerImageIdle.src = './images/player/player_idle_right.gif';
-
-const playerImageRight = new Image();
-playerImageRight.src = './images/player/player_run_right.gif';
-
-const playerImageLeft = new Image();
-playerImageLeft.src = './images/player/player_run_left.gif';
-
-const playerImageShootRight = new Image();
-playerImageShootRight.src = './images/player/player_shoot_right.gif';
-
-const playerImageShootLeft = new Image();
-playerImageShootLeft.src = './images/player/player_shoot_left.gif';
-
-/* const playerImageDeadLeft = new Image();
-playerImageDeadLeft.src = './images/player/player_death_left.gif'; */
-
 class Player {
   constructor(game) {
     this.game = game;
@@ -45,28 +27,37 @@ class Player {
   //Movements
   moveRight() {
     if (this.positionX < 820) {
-      this.positionX += 1;
+      this.positionX += 30;
       this.direction = 'right';
+      this.lastPressed === 'right';
     }
   }
 
   moveLeft() {
     if (this.positionX > 0) {
-      this.positionX -= 1;
+      this.positionX -= 30;
       this.direction = 'left';
-    }
-  }
-
-  jump() {
-    if (!this.jumping) {
-      this.velocityY = -8;
-      this.direction = 'space';
-      this.jumping = true;
+      this.lastPressed === 'left';
     }
   }
 
   shoot() {
     this.direction = 'shoot';
+    const positionX = this.positionX;
+    const positionY = this.positionY;
+    const width = this.playerWidth;
+    const height = this.playerHeight;
+    if (this.lastPressed === 'right') {
+      const shoot = new Projectile(this.game, positionX + width, positionY + height / 2, 'right');
+      this.game.shoots.push(shoot);
+    } else {
+      const shoot = new Projectile(this.game, positionX + width, positionY + height / 2, 'left');
+      this.game.shoots.push(shoot);
+    }
+  }
+
+  jumpThatWorks() {
+    this.velocityY -= 8;
   }
 
   //Draw Images
@@ -77,7 +68,6 @@ class Player {
     context.save();
 
     // Player change when clicked
-
     if (this.direction === 'idle') {
       this.image = playerImageIdle;
     } else if (this.direction === 'right') {
@@ -103,43 +93,24 @@ class Player {
       this.playerWidth,
       this.playerHeight
     );
-    /* context.clearRect(this.image, this.positionX, this.positionY, canvas.width, canvas.height);
-
+    /* 
     context.drawImage(
       this.imageShoot,
       this.positionX,
       this.positionY,
       this.playerWidth,
       this.playerHeightShoot
-    ); */
+    ); 
+    */
     context.restore();
   }
 
   runLogic() {
-    //Jump
-    if (keys.right in keysDown) {
-      this.move = 1;
-      this.direction = 'right';
-      this.moveRight();
-    } else if (keys.left in keysDown) {
-      this.move = -1;
-      this.direction = 'left';
-      this.moveLeft();
-    } else if (keys.f in keysDown) {
-      this.direction = 'shoot';
-      this.shoot();
-    } else {
-      this.move = 0;
-    }
-
     if (this.positionY + this.height >= this.game.$canvas.height) {
       this.jumping = false;
       this.positionY = this.game.$canvas.height - this.height;
       this.velocityY = 0;
     }
-
     if (this.positionY <= 0) this.positionY = 0;
-
-    if (keys.space in keysDown) this.jump();
   }
 }

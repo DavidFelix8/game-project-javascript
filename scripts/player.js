@@ -56,8 +56,16 @@ class Player {
     }
   }
 
-  jumpThatWorks() {
-    this.velocityY -= 8;
+  jump() {
+    this.velocityY = -5;
+  }
+
+  jumpingLogic() {
+    this.velocityX = this.velocityX / (1 + (this.friction / 1000) * 16);
+    this.velocityY = this.velocityY + (this.gravity / 1000) * 16;
+
+    this.positionX = this.positionX + this.velocityX;
+    this.positionY = this.positionY + this.velocityY;
   }
 
   //Draw Images
@@ -106,6 +114,7 @@ class Player {
   }
 
   runLogic() {
+    this.jumpingLogic();
     if (this.positionY + this.height >= this.game.$canvas.height) {
       this.jumping = false;
       this.positionY = this.game.$canvas.height - this.height;

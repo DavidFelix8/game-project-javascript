@@ -29,9 +29,9 @@ class Scoreboard {
   gameOver() {
     // if (this.monsters.checkCollision() || this.monsterground.checkCollision()) {
     this.game.isRunning = false;
-    context.font = '2rem Calibri';
+    context.font = '5rem Calibri';
     context.fillStyle = 'white';
-    context.fillText('Game Over', 200, 250);
+    context.fillText('Game Over', 250, 300);
 
     /* context.drawImage(
       this.gameOver_Img,

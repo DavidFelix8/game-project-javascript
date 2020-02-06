@@ -90,6 +90,7 @@ class Game {
       shoot.paint();
     }
     this.scoreboard.paintScore();
+    // this.scoreboard.gameOver();
   }
 
   clearScreen() {
@@ -173,7 +174,7 @@ class Game {
         break;
       case 'space':
         // console.log(key);
-        this.player.jumpThatWorks();
+        this.player.jump();
         //move player up
         break;
       case 'shoot':

@@ -51,7 +51,7 @@ class Monster {
       playerY < batY + batHeight
     ) {
       this.game.isRunning = false;
-      this.scoreboard.gameOver();
+      // this.scoreboard.gameOver();
     }
   }
 

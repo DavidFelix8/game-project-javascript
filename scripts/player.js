@@ -50,9 +50,11 @@ class Player {
     if (this.lastPressed === 'right') {
       const shoot = new Projectile(this.game, positionX + width, positionY + height / 2, 'right');
       this.game.shoots.push(shoot);
+      bulletSound.play();
     } else {
       const shoot = new Projectile(this.game, positionX + width, positionY + height / 2, 'left');
       this.game.shoots.push(shoot);
+      bulletSound.play();
     }
   }
 

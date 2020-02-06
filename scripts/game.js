@@ -6,20 +6,11 @@ class Game {
     this.context = this.$canvas.getContext('2d');
     this.isRunning = false;
     this.shoots = [];
-    /* this.start = false;
-    this.gameOver = false; */
 
-    this.keyboardController = new Keys(this);
-    this.keyboardController.setKeyboardEventListeners();
-
-    this.background = new Background(this);
     this.entrance = new Entrance(this);
-    this.player = new Player(this);
-    this.projectile = new Projectile(this);
-    this.scoreboard = new Scoreboard(this);
-
     this.monsters = [];
     this.monsterground = [];
+    this.gameLength = 10;
   }
 
   makeMonster() {
@@ -34,6 +25,8 @@ class Game {
   }
 
   start() {
+    this.entrance.entranceIsRunning = false;
+    delete this.entrance.animation;
     this.reset();
     this.makeMonster();
     backSong.play();
@@ -51,7 +44,24 @@ class Game {
     this.player.positionY = 510; 
     this.player.direction = 'idle'; */
     this.isRunning = true;
+    this.keyboardController = new Keys(this);
+    this.keyboardController.setKeyboardEventListeners();
+    this.background = new Background(this);
+    this.player = new Player(this);
+    this.projectile = new Projectile(this);
+    this.scoreboard = new Scoreboard(this);
+    this.scoreboard.score = 0;
   }
+
+  gameOver() {
+    this.isRunning = false;
+    this.clearScreen();
+    backSong.pause();
+    gameOverSong.play();
+    this.context.drawImage(gameOver_image, 150, 50);
+  }
+
+  win() {}
 
   pause() {
     if (this.isRunning) {
@@ -66,11 +76,13 @@ class Game {
     }
   }
 
-  loop() {
+  loop(timestamp) {
+    //console.log(timestamp);
     this.runLogic();
-    this.paint();
+    this.scoreboard.checkWin(timestamp);
     if (this.isRunning) {
-      this.animation = window.requestAnimationFrame(() => this.loop());
+      this.paint();
+      this.animation = window.requestAnimationFrame(timestamp => this.loop(timestamp));
     }
   }
 
@@ -90,7 +102,7 @@ class Game {
       shoot.paint();
     }
     this.scoreboard.paintScore();
-    // this.scoreboard.gameOver();
+    this.win();
   }
 
   clearScreen() {
@@ -143,6 +155,7 @@ class Game {
         }
       }
     }
+    //check if won
   }
 
   shoot() {

@@ -34,7 +34,7 @@ class MonsterGround {
       playerY < greenAnimaY + greenAnimaHeight
     ) {
       this.game.isRunning = false;
-      // this.scoreboard.gameOver();
+      this.game.gameOver();
     }
   }
 

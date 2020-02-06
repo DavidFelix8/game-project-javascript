@@ -5,12 +5,13 @@ window.addEventListener('load', () => {
   const $btnNewGame = document.getElementById('newGame_button');
   const $btnReset = document.getElementById('reset_button');
   const $btnPause = document.getElementById('pause_button');
+  game.entrance.loop();
 
   $btnNewGame.addEventListener('click', () => {
     game.start();
   });
   $btnReset.addEventListener('click', () => {
-    game.reset();
+    game.start();
   });
   $btnPause.addEventListener('click', () => {
     game.pause();

@@ -12,9 +12,12 @@ class Entrance {
     this.velocityYair = 0;
     this.airplaneWidth = 100;
     this.airplaneHeight = 80;
+    this.entranceIsRunning = true;
   }
 
-  start() {}
+  start() {
+    planeSound.play();
+  }
 
   draw() {
     this.game.context.drawImage(backgrondImage, 0, 0, width, height);
@@ -33,5 +36,13 @@ class Entrance {
   runLogic() {
     //this.positionYair += this.velocityYair;
     if (this.positionXair < 400) this.positionXair += this.velocityXair;
+  }
+
+  loop() {
+    this.runLogic();
+    if (this.entranceIsRunning) {
+      this.draw();
+      this.animation = window.requestAnimationFrame(() => this.loop());
+    }
   }
 }

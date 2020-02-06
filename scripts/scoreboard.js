@@ -3,6 +3,7 @@ class Scoreboard {
     this.game = game;
     this.score = 0;
     this.startGame = false;
+    this.timer = 0;
   }
   //Score
   paintScore() {
@@ -11,37 +12,23 @@ class Scoreboard {
     context.fillText('Score: ' + this.score, 700, 50);
   }
 
-  //Start Game
-  /*  startGame() {
-    if (!startGame) {
-      context.font = '3rem Calibri';
-      context.fillStyle = 'white';
-      context.fillText('Press Enter to Start', 47, 180);
-      context.font = '2rem Calibri';
-      context.fillText('Arrow Right && Arrow Left - move', 47, 210);
-      context.fillText('Space -  jump', 47, 240);
-      context.fillText('F -  fire', 47, 240);
+  checkWin(timestamp) {
+    const time = this.game.gameLength * 1000;
+
+    if (this.timer === 0 && timestamp !== undefined) {
+      this.timer = timestamp;
     }
-    if (keysDown[keys]) startGame = true;
-  } */
 
-  //GameOver
-  gameOver() {
-    // if (this.monsters.checkCollision() || this.monsterground.checkCollision()) {
-    this.game.isRunning = false;
-    context.font = '5rem Calibri';
-    context.fillStyle = 'white';
-    context.fillText('Game Over', 250, 300);
-
-    /* context.drawImage(
-      this.gameOver_Img,
-      this.positionX,
-      this.positionY,
-      this.playerWidth,
-      this.playerHeight
-    ); */
-    // }
-    // backSong.pause();
+    if (this.timer < timestamp - time) {
+      if (this.score > 6) {
+        this.game.pause();
+        context.font = '40px monospace';
+        context.fillStyle = 'black';
+        context.fillText(`You won with a score of ${this.score}`, 160, 270);
+      } else {
+        this.game.gameOver();
+      }
+    }
   }
 
   //Win

@@ -58,6 +58,7 @@ class Game {
     this.clearScreen();
     backSong.pause();
     gameOverSong.play();
+    this.background.paint();
     this.context.drawImage(gameOver_image, 150, 50);
   }
 

@@ -12,6 +12,7 @@ class Scoreboard {
     context.fillText('Score: ' + this.score, 700, 50);
   }
 
+  //Win
   checkWin(timestamp) {
     const time = this.game.gameLength * 1000;
 
@@ -30,8 +31,6 @@ class Scoreboard {
       }
     }
   }
-
-  //Win
 
   runlogic() {}
 }

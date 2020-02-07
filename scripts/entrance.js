@@ -34,8 +34,10 @@ class Entrance {
   }
 
   drawInstructions() {
+    context.fillStyle = 'rgba(255, 255, 255, 0.5)';
+    context.fillRect(200, 120, this.game.$canvas.width - 400, this.game.$canvas.height - 220);
     context.font = '30pt Calibri';
-    context.fillStyle = 'white';
+    context.fillStyle = 'black';
     context.fillText('Arrow Right -> Move Right', 240, 180);
     context.fillText('Arrow Left -> Move Left', 250, 240);
     context.fillText('Space -> Jump', 330, 300);

@@ -50,6 +50,7 @@ class Player {
     if (this.lastPressed === 'right') {
       const shoot = new Projectile(this.game, positionX + width, positionY + height / 2, 'right');
       this.game.shoots.push(shoot);
+      //set a condition that checks if the game is in mute or not
       bulletSound.play();
     } else {
       const shoot = new Projectile(this.game, positionX + width, positionY + height / 2, 'left');

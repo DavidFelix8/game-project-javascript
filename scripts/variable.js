@@ -51,7 +51,21 @@ function volumeChange(change) {
   change.src = change.bln ? volDown : volUp;
   change.bln = !change.bln;
 
+  /*   if (volDown) {
+    backSong.pause();
+    bulletSound.pause();
+    gameOverSong.pause();
+    planeSound.pause();
+  } else {
+    backSong.play();
+    bulletSound.play();
+    gameOverSong.play();
+    planeSound.play();
+  } */
   discover = volDown ? backSong.pause() : backSong.play();
+  discover = volDown ? bulletSound.pause() : bulletSound.play();
+  discover = volDown ? gameOverSong.pause() : gameOverSong.play();
+  discover = volDown ? planeSound.pause() : planeSound.play();
 }
 //Entrance
 const planeSound = new Audio('music/plane.ogg');

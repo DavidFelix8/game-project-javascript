@@ -17,15 +17,3 @@ window.addEventListener('load', () => {
     game.pause();
   });
 });
-
-/* window.onload = function() {
-  this.document.getElementsByClassName('newGame_button').onclick = function() {
-    game.start();
-    this.document.getElementsByClassName('reset_button').onclick = function() {
-      game.reset();
-      this.document.getElementsByClassName('pause_button').onclick = function() {
-        game.pause();
-      };
-    };
-  };
-}; */

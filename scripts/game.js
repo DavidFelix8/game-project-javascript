@@ -1,16 +1,28 @@
+//TODO - Make the winning screen work
+//TODO - Fix the instructions
+//TODO  - Sound continues when new game
+//TODO - When pressing new game you cant win
+//TODO - Time is not running when score is high
+
 class Game {
   constructor($canvas) {
     this.$canvas = $canvas;
+    //Game constants
     this.$canvas.height = $canvas.height;
     this.$canvas.width = $canvas.width;
     this.context = this.$canvas.getContext('2d');
-    this.isRunning = false;
-    this.shoots = [];
-
-    this.entrance = new Entrance(this);
-    this.monsters = [];
-    this.monsterground = [];
     this.gameLength = 10;
+
+    // this.shoots = [];
+    // this.monsters = [];
+    // this.monsterground = [];
+    //Game thing we want to set just once when the page loads for the first time
+    this.entrance = new Entrance(this);
+    this.keyboardController = new Keys(this);
+    this.keyboardController.setKeyboardEventListeners();
+
+    //Game is never running in the beggining
+    this.isRunning = false;
   }
 
   makeMonster() {
@@ -27,30 +39,26 @@ class Game {
   start() {
     this.entrance.entranceIsRunning = false;
     delete this.entrance.animation;
-    this.reset();
-    this.makeMonster();
     backSong.play();
-    if (!this.animation) {
+    this.reset();
+    if (!this.isRunning) {
+      this.isRunning = !this.isRunning;
       this.loop();
     }
   }
 
   reset() {
-    this.clearScreen();
     // backSong.stop();
+    // this.isRunning = true;
     this.monsters = [];
     this.monsterground = [];
-    /*  this.player.positionX = 260;
-    this.player.positionY = 510; 
-    this.player.direction = 'idle'; */
-    this.isRunning = true;
-    this.keyboardController = new Keys(this);
-    this.keyboardController.setKeyboardEventListeners();
+    this.shoots = [];
+    this.makeMonster();
     this.background = new Background(this);
     this.player = new Player(this);
     this.projectile = new Projectile(this);
     this.scoreboard = new Scoreboard(this);
-    this.scoreboard.score = 0;
+    this.clearScreen();
   }
 
   gameOver() {
@@ -61,8 +69,6 @@ class Game {
     this.background.paint();
     this.context.drawImage(gameOver_image, 150, 50);
   }
-
-  win() {}
 
   pause() {
     if (this.isRunning) {
@@ -79,8 +85,8 @@ class Game {
 
   loop(timestamp) {
     //console.log(timestamp);
-    this.runLogic();
     this.scoreboard.checkWin(timestamp);
+    this.runLogic();
     if (this.isRunning) {
       this.paint();
       this.animation = window.requestAnimationFrame(timestamp => this.loop(timestamp));
@@ -90,7 +96,6 @@ class Game {
   paint() {
     this.clearScreen();
     this.background.paint();
-    this.entrance.draw();
     this.player.draw();
     this.projectile.paint();
     for (let monster of this.monsters) {
@@ -103,7 +108,6 @@ class Game {
       shoot.paint();
     }
     this.scoreboard.paintScore();
-    this.win();
   }
 
   clearScreen() {
@@ -111,9 +115,7 @@ class Game {
   }
 
   runLogic() {
-    this.entrance.runLogic();
     this.player.runLogic();
-    //console.log(this.shoots);
     for (let shoot of this.shoots) {
       shoot.runLogic();
     }
@@ -172,35 +174,5 @@ class Game {
       const shoot = new Projectile(this, positionX + width, positionY + height / 2, 'left');
       this.shoots.push(shoot);
     }
-  }
-
-  movePlayer(key) {
-    switch (key) {
-      case 'right':
-        //console.log(key);
-        this.player.moveRight();
-        //move player up
-        break;
-      case 'left':
-        //console.log(key);
-        this.player.moveLeft();
-        //move player dow
-        break;
-      case 'space':
-        // console.log(key);
-        this.player.jump();
-        //move player up
-        break;
-      case 'shoot':
-        //console.log(key);
-        this.player.shoot();
-        //shoot
-        break;
-    }
-  }
-
-  clear() {
-    const { width, height } = this.$canvas;
-    this.context.clearRect(0, 0, width, height);
   }
 }

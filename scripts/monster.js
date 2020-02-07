@@ -50,7 +50,7 @@ class Monster {
       playerY + playerHeight > batY &&
       playerY < batY + batHeight
     ) {
-      this.game.isRunning = false;
+      // this.game.isRunning = false;
       this.game.gameOver();
     }
   }

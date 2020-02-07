@@ -33,37 +33,30 @@ class Entrance {
     );
   }
 
-  /*   instructions() {
-    if (!start) {
-      context.font = "30pt Calibri";
-      context.fillStyle = "white";
-      context.fillText("Arrow Right && Arrow Left - move", 160, 250);
-      context.fillText("Space - Jump", 160, 270);
-      context.fillText("F - Shoot", 160, 290);
-      context.fillText("Press Enter to Start", 160, 300);
-    }
-    if (key) {
-        event.preventDefault();
-        this.game.start(key);
-    }
-  } */
+  drawInstructions() {
+    context.font = '30pt Calibri';
+    context.fillStyle = 'white';
+    context.fillText('Arrow Right -> Move Right', 240, 180);
+    context.fillText('Arrow Left -> Move Left', 250, 240);
+    context.fillText('Space -> Jump', 330, 300);
+    context.fillText('F -> Shoot', 370, 360);
+    context.fillText('Press New Game to Start', 260, 470);
+  }
 
   runLogic() {
-    //this.positionYair += this.velocityYair;
     if (this.positionXair < 400) {
       this.positionXair += this.velocityXair;
-    } /* 
+    }
     if (this.positionXair === 400) {
-      this.player.positionY = 40;
-      this.player.positionX = 260;
-    } */
+      this.drawInstructions();
+    }
   }
 
   loop() {
-    this.runLogic();
     if (this.entranceIsRunning) {
       this.draw();
       this.animation = window.requestAnimationFrame(() => this.loop());
     }
+    this.runLogic();
   }
 }

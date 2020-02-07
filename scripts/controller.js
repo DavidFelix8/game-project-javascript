@@ -4,23 +4,25 @@ class Keys {
   }
   setKeyboardEventListeners() {
     window.addEventListener('keydown', event => {
-      let key = '';
+      event.preventDefault();
       switch (event.keyCode) {
         case 32:
-          key = 'space';
+          //SPACE
+          this.game.player.jump();
           break;
         case 37:
-          key = 'left';
+          //LEFT
+          this.game.player.moveLeft();
+
           break;
         case 39:
-          key = 'right';
+          //RIGHT
+          this.game.player.moveRight();
+
           break;
         case 70:
-          key = 'shoot';
-      }
-      if (key) {
-        event.preventDefault();
-        this.game.movePlayer(key);
+          // "F" =
+          this.game.player.shoot();
       }
     });
   }
